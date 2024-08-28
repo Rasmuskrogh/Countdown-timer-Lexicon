@@ -5,14 +5,22 @@ const CountdownTimer = () => {
   const [isActive, setIsActive] = useState<Boolean>(false);
 
   const timerControl = useRef<number | null>(null);
+  const newStartTime = useRef<HTMLInputElement | null>(null);
 
-  const handleOnStartTime = (e) => {
-    setTimeLeft(e.target.value);
+  const handleOnStartTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTimeLeft(Number(e.target.value));
   };
 
   const handleOnReset = () => {
     setIsActive(false);
-    setTimeLeft(60);
+    console.log(typeof newStartTime.current?.value);
+    const reftoNum = Number(newStartTime.current?.value);
+    console.log(typeof reftoNum, reftoNum);
+    if (reftoNum) {
+      setTimeLeft(reftoNum);
+    } else {
+      setTimeLeft(60);
+    }
   };
 
   const handleOnStart = () => {
@@ -30,16 +38,14 @@ const CountdownTimer = () => {
   useEffect(() => {
     if (isActive && timeLeft > 0) {
       timerControl.current = setInterval(() => {
-        if (typeof timeLeft === "number") {
-          setTimeLeft((prevTimeLeft) => {
-            if (prevTimeLeft === 0) {
-              setIsActive(false);
-              return 0;
-            } else {
-              return prevTimeLeft - 1;
-            }
-          });
-        }
+        setTimeLeft((prevTimeLeft) => {
+          if (prevTimeLeft <= 0) {
+            setIsActive(false);
+            return 0;
+          } else {
+            return prevTimeLeft - 1;
+          }
+        });
       }, 1000);
     }
     return () => {
@@ -53,7 +59,7 @@ const CountdownTimer = () => {
   return (
     <>
       <h1>CountdownTimer</h1>
-      <h2>{timeLeft} seconds left</h2>
+      <h2>{timeLeft != 0 ? `${timeLeft} seconds left` : "Time's up!"} </h2>
       <button onClick={handleOnStart} disabled={isActive ? true : false}>
         Start
       </button>
@@ -67,6 +73,8 @@ const CountdownTimer = () => {
         Reset
       </button>
       <input
+        disabled={isActive ? true : false}
+        ref={newStartTime}
         type="number"
         placeholder="Set start time"
         onChange={handleOnStartTime}
