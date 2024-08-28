@@ -6,6 +6,10 @@ const CountdownTimer = () => {
 
   const timerControl = useRef<number | null>(null);
 
+  const handleOnStartTime = (e) => {
+    setTimeLeft(e.target.value);
+  };
+
   const handleOnReset = () => {
     setIsActive(false);
     setTimeLeft(60);
@@ -26,7 +30,16 @@ const CountdownTimer = () => {
   useEffect(() => {
     if (isActive && timeLeft > 0) {
       timerControl.current = setInterval(() => {
-        setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+        if (typeof timeLeft === "number") {
+          setTimeLeft((prevTimeLeft) => {
+            if (prevTimeLeft === 0) {
+              setIsActive(false);
+              return 0;
+            } else {
+              return prevTimeLeft - 1;
+            }
+          });
+        }
       }, 1000);
     }
     return () => {
@@ -53,6 +66,11 @@ const CountdownTimer = () => {
       >
         Reset
       </button>
+      <input
+        type="number"
+        placeholder="Set start time"
+        onChange={handleOnStartTime}
+      />
     </>
   );
 };
