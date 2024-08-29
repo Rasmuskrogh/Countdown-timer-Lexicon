@@ -1,0 +1,64 @@
+.countdown-timer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    padding-top: 3rem;
+    text-align: center;
+    font-size: 3rem;
+    padding-bottom: 3rem;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  section {
+    padding: 1rem;
+    border-radius: 25px;
+    background-color: rgb(32, 32, 32);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    width: 30rem;
+
+    h2 {
+      font-size: 2.5rem;
+      padding-bottom: 1rem;
+      font-family: "Roboto", sans-serif;
+      font-weight: 500;
+      font-style: normal;
+      color: white;
+    }
+    div {
+      display: flex;
+      gap: 1rem;
+      padding-bottom: 1rem;
+      button {
+        padding: 0.3rem 0.5rem;
+        border: none;
+        border-radius: 12px;
+        background-color: lightblue;
+        font-size: 1.5rem;
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+        font-style: normal;
+      }
+      button:hover {
+        background-color: lightgoldenrodyellow;
+        cursor: pointer;
+      }
+      button:disabled:hover {
+        background-color: lightblue;
+        cursor: default;
+      }
+    }
+    input {
+      width: 15rem;
+      padding: 0.5rem 0.3rem;
+      font-size: 1.2rem;
+      border-radius: 12px;
+      border: none;
+    }
+  }
+}

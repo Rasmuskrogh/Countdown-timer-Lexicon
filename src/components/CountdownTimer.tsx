@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
+import "./CountdownTimer.css";
 
 const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState<number>(6);
+  const [timeLeft, setTimeLeft] = useState<number>(60);
   const [isActive, setIsActive] = useState<Boolean>(false);
 
   const timerControl = useRef<number | null>(null);
@@ -13,9 +14,7 @@ const CountdownTimer = () => {
 
   const handleOnReset = () => {
     setIsActive(false);
-    console.log(typeof newStartTime.current?.value);
     const reftoNum = Number(newStartTime.current?.value);
-    console.log(typeof reftoNum, reftoNum);
     if (reftoNum) {
       setTimeLeft(reftoNum);
     } else {
@@ -57,29 +56,33 @@ const CountdownTimer = () => {
   }, [isActive]);
 
   return (
-    <>
-      <h1>CountdownTimer</h1>
-      <h2>{timeLeft != 0 ? `${timeLeft} seconds left` : "Time's up!"} </h2>
-      <button onClick={handleOnStart} disabled={isActive ? true : false}>
-        Start
-      </button>
-      <button onClick={handleOnStop} disabled={!isActive ? true : false}>
-        Pause
-      </button>
-      <button
-        onClick={handleOnReset}
-        disabled={isActive || timeLeft === 60 ? true : false}
-      >
-        Reset
-      </button>
-      <input
-        disabled={isActive ? true : false}
-        ref={newStartTime}
-        type="number"
-        placeholder="Set start time"
-        onChange={handleOnStartTime}
-      />
-    </>
+    <div className="countdown-timer-wrapper">
+      <h1>The Final Countdown (timer)</h1>
+      <section>
+        <h2>{timeLeft != 0 ? `${timeLeft} seconds left` : "Time's up!"} </h2>
+        <div>
+          <button onClick={handleOnStart} disabled={isActive ? true : false}>
+            Start
+          </button>
+          <button onClick={handleOnStop} disabled={!isActive ? true : false}>
+            Pause
+          </button>
+          <button
+            onClick={handleOnReset}
+            disabled={isActive || timeLeft === 60 ? true : false}
+          >
+            Reset
+          </button>
+        </div>
+        <input
+          disabled={isActive ? true : false}
+          ref={newStartTime}
+          type="number"
+          placeholder="Set start time"
+          onChange={handleOnStartTime}
+        />
+      </section>
+    </div>
   );
 };
 
