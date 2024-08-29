@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import Button from "./Button";
+
 import "./CountdownTimer.css";
 
 const CountdownTimer = () => {
@@ -61,18 +63,22 @@ const CountdownTimer = () => {
       <section>
         <h2>{timeLeft != 0 ? `${timeLeft} seconds left` : "Time's up!"} </h2>
         <div>
-          <button onClick={handleOnStart} disabled={isActive ? true : false}>
-            Start
-          </button>
-          <button onClick={handleOnStop} disabled={!isActive ? true : false}>
-            Pause
-          </button>
-          <button
-            onClick={handleOnReset}
+          <Button
+            action={handleOnStart}
+            disabled={isActive ? true : false}
+            label="Start"
+          />
+          <Button
+            action={handleOnStop}
+            disabled={!isActive ? true : false}
+            label="Pause"
+          />
+
+          <Button
+            action={handleOnReset}
             disabled={isActive || timeLeft === 60 ? true : false}
-          >
-            Reset
-          </button>
+            label="Reset"
+          />
         </div>
         <input
           disabled={isActive ? true : false}
