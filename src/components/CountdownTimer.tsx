@@ -6,22 +6,19 @@ import "./CountdownTimer.css";
 const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState<number>(60);
   const [isActive, setIsActive] = useState<Boolean>(false);
+  const [startTime, setStartTime] = useState<number>(60);
 
   const timerControl = useRef<number | null>(null);
-  const newStartTime = useRef<HTMLInputElement | null>(null);
 
   const handleOnStartTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTimeLeft(Number(e.target.value));
+    const newStartTime = Number(e.target.value);
+    setStartTime(newStartTime);
+    setTimeLeft(newStartTime);
   };
 
   const handleOnReset = () => {
     setIsActive(false);
-    const reftoNum = Number(newStartTime.current?.value);
-    if (reftoNum) {
-      setTimeLeft(reftoNum);
-    } else {
-      setTimeLeft(60);
-    }
+    setTimeLeft(startTime);
   };
 
   const handleOnStart = () => {
@@ -61,11 +58,11 @@ const CountdownTimer = () => {
     <div className="countdown-timer-wrapper">
       <h1>The Final Countdown (timer)</h1>
       <section>
-        <h2>{timeLeft != 0 ? `${timeLeft} seconds left` : "Time's up!"} </h2>
+        {timeLeft != 0 ? <h2>{timeLeft} seconds left</h2> : <h2>Time's up!</h2>}
         <div>
           <Button
             action={handleOnStart}
-            disabled={isActive ? true : false}
+            disabled={isActive || timeLeft === 0 ? true : false}
             label="Start"
           />
           <Button
@@ -76,13 +73,12 @@ const CountdownTimer = () => {
 
           <Button
             action={handleOnReset}
-            disabled={isActive || timeLeft === 60 ? true : false}
+            disabled={timeLeft === startTime ? true : false}
             label="Reset"
           />
         </div>
         <input
           disabled={isActive ? true : false}
-          ref={newStartTime}
           type="number"
           placeholder="Set start time"
           onChange={handleOnStartTime}

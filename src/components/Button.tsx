@@ -1,5 +1,3 @@
-import React from "react";
-
 interface IButton {
   action: () => void;
   label: string;
